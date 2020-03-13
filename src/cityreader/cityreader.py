@@ -36,7 +36,8 @@ def cityreader(cities=[]):
     # `cities` list
 
     with open("cities.csv") as csv_file:
-        # used DictReader so that I can reference the name of the row and map through the rows
+        # used DictReader so that I can reference the name of the row and map
+        # through the rows
         csv_data = csv.DictReader(csv_file, delimiter=",")
 
         for row in csv_data:
@@ -86,6 +87,7 @@ for c in cities:
 
 # TODO Get latitude and longitude values from the user
 
+print("\n" + "#" * 25)
 first_coordinate = input("Enter first pair of latitude,longitude: ")
 second_coordinate = input("Enter send pair of latitude,longitude: ")
 
@@ -98,12 +100,37 @@ user_lat2 = float(coord2[0])
 user_lon2 = float(coord2[1])
 
 
-def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
-    # within will hold the cities that fall within the specified region
+def cityreader_stretch(lat1, lon1, lat2, lon2, cities):
+
     within = []
+
+    max_lat = float(max(lat1, lat2))
+    min_lat = float(min(lat1, lat2))
+
+    max_lon = float(max(lon1, lon2))
+    min_lon = float(min(lon1, lon2))
+
+    # Helper functions to assist with comprehension and filtering data
+    def obtain_city_lat(city):
+        if (min_lat <= city.lat and max_lat >= city.lat):
+            return True
+
+    def obtain_city_lon(city):
+        if (min_lon <= city.lon and max_lon >= city.lon):
+            return True
 
     # TODO Ensure that the lat and lon valuse are all floats
     # Go through each city and check to see if it falls within
     # the specified coordinates.
 
+    # within will hold the cities that fall within the specified region
+    within = [city for city in cities if obtain_city_lon(
+        city) and obtain_city_lat(city)]
+
     return within
+
+
+print("\n" + "#" * 25)
+for city in cityreader_stretch(user_lat1, user_lon1,
+                               user_lat2, user_lon2, cities):
+    print(city)
