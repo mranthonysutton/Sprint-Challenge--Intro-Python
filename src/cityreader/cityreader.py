@@ -36,6 +36,7 @@ def cityreader(cities=[]):
     # `cities` list
 
     with open("cities.csv") as csv_file:
+        # used DictReader so that I can reference the name of the row and map through the rows
         csv_data = csv.DictReader(csv_file, delimiter=",")
 
         for row in csv_data:
@@ -84,6 +85,17 @@ for c in cities:
 # Salt Lake City: (40.7774,-111.9301)
 
 # TODO Get latitude and longitude values from the user
+
+first_coordinate = input("Enter first pair of latitude,longitude: ")
+second_coordinate = input("Enter send pair of latitude,longitude: ")
+
+coord1 = first_coordinate.split(",")
+coord2 = second_coordinate.split(",")
+
+user_lat1 = float(coord1[0])
+user_lon1 = float(coord1[1])
+user_lat2 = float(coord2[0])
+user_lon2 = float(coord2[1])
 
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
